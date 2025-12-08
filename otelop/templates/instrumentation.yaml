@@ -4,11 +4,6 @@ metadata:
   name: auto-python
   namespace: apps
 spec:
-  # Target pods in this namespace via label selector. Remove selector to apply cluster-wide
-  selector:
-    matchLabels:
-      app: test-python-app
   python:
     # use the operator's configured auto-instrumentation image
     image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:latest
-    addK8sUIDAttributes: true
