@@ -13,6 +13,11 @@ spec:
             name: opentelemetry-operator
             path: otelop
             namespace: otel
+          - cluster: in-cluster
+            name: cert-manager
+            path: cert-manager
+            namespace: cert-manager
+          
   template:
     metadata:
       name: "{{.name}}"
