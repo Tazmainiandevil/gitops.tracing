@@ -1,13 +1,13 @@
 apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
-  name: jaeger-inmemory-instance  # (1)
-  namespace: o11y # (2)
+  name: jaeger-inmemory-instance
+  namespace: otel
 spec:
   image: jaegertracing/jaeger:latest
   ports:
     - name: jaeger
-      port: 16686     # (3)
+      port: 16686
   config:
     service:
       extensions: [jaeger_storage, jaeger_query]
