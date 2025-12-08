@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: apps
   namespace: argocd
-  labels:
-    environment: "qa"    
 spec:
   project: default
   sources:

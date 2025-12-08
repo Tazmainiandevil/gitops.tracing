@@ -15,7 +15,7 @@ spec:
             namespace: otel
   template:
     metadata:
-      name: "{{.cluster}}"
+      name: "{{.name}}"
       namespace: argocd
     spec:
       project: default
@@ -25,7 +25,7 @@ spec:
         targetRevision: main
       destination:
         namespace: "{{.namespace}}"
-        name: "{{.name}}"
+        name: "{{.cluster}}"
       syncPolicy:
         automated:
           prune: true
