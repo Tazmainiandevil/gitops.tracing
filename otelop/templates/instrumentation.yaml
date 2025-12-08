@@ -1,0 +1,12 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: auto-python
+  namespace: apps
+spec:
+  injection:
+    enabled: true
+  python:
+    # use the operator's configured auto-instrumentation image (matches operator flags)
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:latest
+    addK8sUIDAttributes: true
