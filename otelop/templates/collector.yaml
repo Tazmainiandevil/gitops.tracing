@@ -1,23 +1,29 @@
 apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
-  name: otel-collector
-  namespace: {{ .Release.Namespace }}
+  name: jaeger-inmemory-instance  # (1)
+  namespace: o11y # (2)
 spec:
-  mode: deployment
-  replicas: 2
-  
-  # Resource configuration
-  resources:
-    requests:
-      memory: "256Mi"
-      cpu: "100m"
-    limits:
-      memory: "512Mi"
-      cpu: "200m"
-  
-  # OpenTelemetry Collector configuration
-  config: |
+  image: jaegertracing/jaeger:latest
+  ports:
+    - name: jaeger
+      port: 16686     # (3)
+  config:
+    service:
+      extensions: [jaeger_storage, jaeger_query]
+      pipelines:
+        traces:
+          receivers: [otlp]
+          exporters: [jaeger_storage_exporter]
+    extensions:
+      jaeger_query:
+        storage:
+          traces: memstore
+      jaeger_storage:
+        backends:
+          memstore:
+            memory:
+              max_traces: 100000
     receivers:
       otlp:
         protocols:
@@ -25,99 +31,6 @@ spec:
             endpoint: 0.0.0.0:4317
           http:
             endpoint: 0.0.0.0:4318
-      
-      # Prometheus receiver for metrics scraping
-      prometheus:
-        config:
-          scrape_configs:
-            - job_name: 'otel-collector'
-              static_configs:
-                - targets: ['localhost:8888']
-    
-    processors:
-      batch:
-        timeout: 1s
-        send_batch_size: 1024
-        send_batch_max_size: 2048
-      
-      # Memory limiter to prevent OOM
-      memory_limiter:
-        limit_mib: 400
-      
-      # Resource processor to add additional attributes
-      resource:
-        attributes:
-          - key: cluster.name
-            value: "dev-aws"
-            action: insert
-          - key: environment
-            value: "development"
-            action: insert
-          - key: deployment.environment
-            value: "dev"
-            action: insert
-          - key: k8s.cluster.name
-            value: "dev-aws"
-            action: insert
-    
     exporters:
-      # Logging exporter for debugging
-      logging:
-        loglevel: debug
-      
-      # OTLP exporter - configure this to send to your observability backend
-      # Examples: Jaeger, Zipkin, Grafana Cloud, Datadog, etc.
-      otlp:
-        endpoint: "https://your-observability-backend:4317"
-        headers:
-          # Add authentication headers if needed
-          # api-key: "your-api-key"
-        tls:
-          insecure: false
-      
-      # Prometheus exporter for metrics
-      prometheus:
-        endpoint: "0.0.0.0:8889"
-    
-    service:
-      telemetry:
-        metrics:
-          address: 0.0.0.0:8888
-      
-      pipelines:
-        traces:
-          receivers: [otlp]
-          processors: [memory_limiter, batch, resource]
-          exporters: [logging, otlp]
-        
-        metrics:
-          receivers: [otlp, prometheus]
-          processors: [memory_limiter, batch, resource]
-          exporters: [logging, prometheus]
-        
-        logs:
-          receivers: [otlp]
-          processors: [memory_limiter, batch, resource]
-          exporters: [logging]
-  
-  # Service configuration
-  service:
-    type: ClusterIP
-  
-  # Ingress configuration (optional)
-  ingress:
-    type: ""
-    
-  # Pod template specifications
-  podTemplate:
-    spec:
-      containers:
-        - name: otc-container
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 65534
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
+      jaeger_storage_exporter:
+        trace_storage: memstore
