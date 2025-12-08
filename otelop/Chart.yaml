@@ -6,7 +6,7 @@ type: application
 appVersion: 0.138.0
 
 dependencies:
-  - name: otelop
+  - name: opentelemetry-operator
     alias: otelop
     version: 0.99.2
     repository: https://open-telemetry.github.io/opentelemetry-helm-charts
