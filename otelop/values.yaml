@@ -1,0 +1,95 @@
+opentelemetry-operator:
+  # Basic operator configuration
+  replicaCount: 1
+  
+  # Manager configuration
+  manager:
+    # Resource limits and requests
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+    
+    # Security context
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 65534
+    
+    # Pod security context
+    podSecurityContext:
+      fsGroup: 65534
+      runAsGroup: 65534
+      runAsNonRoot: true
+      runAsUser: 65534
+      seccompProfile:
+        type: RuntimeDefault
+  
+  # Admission webhook configuration
+  admissionWebhooks:
+    enabled: true
+    # Auto-generate certificates
+    autoGenerateCert:
+      enabled: true
+    
+    # Webhook patches
+    patches:
+      enabled: true
+  
+  # RBAC configuration
+  rbac:
+    create: true
+  
+  # Service account
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+  
+  # Node selector, tolerations, and affinity
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  
+  # Pod annotations and labels
+  podAnnotations: {}
+  podLabels: {}
+  
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 8443
+    targetPort: 8443
+  
+  # Metrics service
+  metricsService:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+  
+  # Enable metrics
+  metrics:
+    enabled: true
+  
+  # Auto-instrumentation configuration for Python and Node.js/TypeScript
+  instrumentationJobImage: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:latest
+  
+  # Enable auto-instrumentation webhook
+  webhook:
+    # Enable the mutating admission webhook for auto-instrumentation
+    autoInstrumentation:
+      enabled: true
+  
+  # Default instrumentation images
+  instrumentation:
+    python:
+      image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.48b0
+    nodejs:
+      image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.54.0
