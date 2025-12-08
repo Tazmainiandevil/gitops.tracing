@@ -15,7 +15,7 @@ spec:
             namespace: otel
   template:
     metadata:
-      name: "{{.name}}"
+      name: "{{.cluster}}"
       namespace: argocd
     spec:
       project: default
