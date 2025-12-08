@@ -4,6 +4,7 @@ metadata:
   name: jaeger-inmemory-instance
   namespace: otel
 spec:
+  mode: deployment
   image: jaegertracing/jaeger:latest
   ports:
     - name: jaeger
