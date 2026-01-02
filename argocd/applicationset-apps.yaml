@@ -14,8 +14,6 @@ spec:
               elements:
                 - env: dev
                   cluster: in-cluster
-                - env: test
-                  cluster: in-cluster
           - list:
               elements:
                 - name: demo-dotnet
