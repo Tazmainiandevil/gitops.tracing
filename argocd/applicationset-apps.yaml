@@ -14,14 +14,8 @@ spec:
               elements:
                 - env: dev
                   cluster: in-cluster
-        
           - list:
               elements:
-                # Environments
-                - env: dev
-                  cluster: in-cluster
-
-                # Apps
                 - name: demo-dotnet
                   path: apps/demo
                   namespace: apps
