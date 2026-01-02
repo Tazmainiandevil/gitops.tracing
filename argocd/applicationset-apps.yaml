@@ -7,19 +7,27 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - list:
-        elements:
+    - matrix:
+        generators:
           # Environments
-          - env: dev
-            cluster: in-cluster
+          - list:
+              elements:
+                - env: dev
+                  cluster: in-cluster
+        
+          - list:
+              elements:
+                # Environments
+                - env: dev
+                  cluster: in-cluster
 
-          # Apps
-          - name: demo-dotnet
-            path: apps/demo
-            namespace: apps
-            type: app
-            owner: dev-team
-            syncwave: "3"
+                # Apps
+                - name: demo-dotnet
+                  path: apps/demo
+                  namespace: apps
+                  type: app
+                  owner: dev-team
+                  syncwave: "3"
 
   template:
     metadata:
