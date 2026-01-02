@@ -18,5 +18,6 @@ spec:
       containers:
         - name: demo-dotnet
           image: demo-dotnet:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
