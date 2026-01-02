@@ -13,16 +13,22 @@ spec:
             cluster: in-cluster            
             path: platform/cert-manager
             namespace: cert-manager
+            type: platform
+            owner: platform-team
             syncwave: "0"
           - name: opentelemetry-operator
             cluster: in-cluster
             path: platform/opentelemetry-operator
             namespace: monitoring
+            type: platform
+            owner: platform-team
             syncwave: "0"
           - name: collector
             path: platform/collector
             namespace: monitoring
             cluster: in-cluster
+            type: platform
+            owner: platform-team
             syncwave: "1"
           
           
@@ -30,6 +36,11 @@ spec:
     metadata:
       name: "{{.name}}"
       namespace: argocd
+      labels:
+        gitops.taz.dev/owner: "{{.owner}}"
+        gitops.taz.dev/type: "{{.type}}"
+        gitops.taz.dev/cluster: "{{.cluster}}"
+        gitops.taz.dev/namespace: "{{.namespace}}"
       annotations:
         argocd.argoproj.io/sync-wave: "{{.syncwave}}"
     spec:
