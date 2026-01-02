@@ -2,7 +2,7 @@ apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
   name: jaeger-inmemory-instance
-  namespace: otel
+  namespace: monitoring
 spec:
   mode: deployment
   image: jaegertracing/jaeger:latest
@@ -13,11 +13,11 @@ spec:
       targetPort: 0
     - name: otlp-grpc
       port: 4317
-      protocol: TCP
+      protocol: TCP	
       targetPort: 0
     - name: otlp-http
       port: 4318
-      protocol: TCP
+      protocol: TCP	
       targetPort: 0
   config:
     service:
