@@ -5,7 +5,7 @@ opentelemetry-operator:
   # Manager configuration
   manager:
     autoInstrumentationImage:
-      donet:
+      dotnet:
         repository: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet
         tag: latest
     autoInstrumentation:
