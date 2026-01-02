@@ -30,12 +30,6 @@ spec:
                   type: platform
                   owner: platform-team
                   syncwave: "0"
-                - name: collector
-                  path: platform/collector
-                  namespace: monitoring
-                  type: platform
-                  owner: platform-team
-                  syncwave: "1"
   template:
     metadata:
       name: "{{.env}}-{{.name}}"
