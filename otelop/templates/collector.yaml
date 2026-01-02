@@ -9,10 +9,16 @@ spec:
   ports:
     - name: jaeger-ui
       port: 16686
+      protocol: TCP
+      targetPort: 0
     - name: otlp-grpc
       port: 4317
+      protocol: TCP
+      targetPort: 0
     - name: otlp-http
       port: 4318
+      protocol: TCP
+      targetPort: 0
   config:
     service:
       extensions: [jaeger_storage, jaeger_query]
