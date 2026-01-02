@@ -9,17 +9,21 @@ spec:
   generators:
     - list:
         elements:
+          # Environments
+          - env: dev
+            cluster: in-cluster
+
+          # Apps
           - name: demo-dotnet
             path: apps/demo
             namespace: apps
-            cluster: in-cluster
             type: app
             owner: dev-team
             syncwave: "3"
 
   template:
     metadata:
-      name: "{{.name}}"
+      name: "{{.env}}-{{.name}}"
       namespace: argocd
       labels:
         gitops.taz.dev/owner: "{{.owner}}"
