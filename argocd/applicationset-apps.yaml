@@ -10,7 +10,7 @@ spec:
     - list:
         elements:
           - name: demo-dotnet
-            path: apps/demo-dotnet
+            path: apps/demo
             namespace: apps
             cluster: in-cluster
             syncwave: "3"
