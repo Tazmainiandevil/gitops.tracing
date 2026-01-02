@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: demo-dotnet
   namespace: apps
-  annotations:
-    instrumentation.opentelemetry.io/inject-dotnet: "true"
 spec:
   replicas: 1
   selector:
@@ -14,6 +12,8 @@ spec:
     metadata:
       labels:
         app: demo-dotnet
+      annotations:
+        instrumentation.opentelemetry.io/inject-dotnet: "true"
     spec:
       containers:
         - name: demo-dotnet
