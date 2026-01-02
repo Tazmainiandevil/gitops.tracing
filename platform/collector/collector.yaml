@@ -2,7 +2,6 @@ apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
   name: jaeger-inmemory-instance
-  namespace: monitoring
 spec:
   mode: deployment
   image: jaegertracing/jaeger:latest

@@ -9,23 +9,18 @@ spec:
   generators:
     - list:
         elements:
-          - cluster: in-cluster
-            name: opentelemetry-operator
-            path: otelop
-            namespace: monitoring
-          - cluster: in-cluster
-            name: cert-manager
-            path: cert-manager
-            namespace: cert-manager
-          - cluster: in-cluster
-            name: demo-dotnet
-            path: demo
-            namespace: demo
-          
+          - name: demo-dotnet
+            path: apps/demo-dotnet
+            namespace: apps
+            cluster: in-cluster
+            syncwave: "3"
+
   template:
     metadata:
       name: "{{.name}}"
       namespace: argocd
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{.syncwave}}"
     spec:
       project: default
       source:

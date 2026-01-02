@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - name: cert-manager
+            cluster: in-cluster            
+            path: platform/cert-manager
+            namespace: cert-manager
+            syncwave: "0"
+          - name: opentelemetry-operator
+            cluster: in-cluster
+            path: platform/opentelemetry-operator
+            namespace: monitoring
+            syncwave: "0"
+          - name: collector
+            path: platform/collector
+            namespace: monitoring
+            cluster: in-cluster
+            syncwave: "1"
+          
+          
+  template:
+    metadata:
+      name: "{{.name}}"
+      namespace: argocd
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{.syncwave}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Tazmainiandevil/gitops.tracing.git
+        path: "{{.path}}"
+        targetRevision: main
+      destination:
+        namespace: "{{.namespace}}"
+        name: "{{.cluster}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
