@@ -5,14 +5,9 @@ opentelemetry-operator:
   # Manager configuration
   manager:
     autoInstrumentationImage:
-      python: 
-        repository: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python
-        tag: latest
-      nodejs:
-        repository: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs
+      donet:
+        repository: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet
         tag: latest
     autoInstrumentation:
-      nodejs:
-        enabled: true
-      python:
+      dotnet:
         enabled: true
