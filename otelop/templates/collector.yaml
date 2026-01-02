@@ -37,6 +37,10 @@ spec:
             endpoint: 0.0.0.0:4317
           http:
             endpoint: 0.0.0.0:4318
+    processors:
+      batch:
+        timeout: 1s
+        send_batch_size: 8192
     exporters:
       jaeger_storage_exporter:
         trace_storage: memstore
