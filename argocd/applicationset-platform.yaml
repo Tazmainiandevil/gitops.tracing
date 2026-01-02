@@ -7,32 +7,35 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - list:
-        elements:
+    - matrix:
+        generators:
           # Environments
-          - env: dev
-            cluster: in-cluster
+          - list:
+              elements:
+                - env: dev
+                  cluster: in-cluster
 
           # Platform components
-          - name: cert-manager
-            path: platform/cert-manager
-            namespace: cert-manager
-            type: platform
-            owner: platform-team
-            syncwave: "0"
-          - name: opentelemetry-operator
-            path: platform/opentelemetry-operator
-            namespace: monitoring
-            type: platform
-            owner: platform-team
-            syncwave: "0"
-          - name: collector
-            path: platform/collector
-            namespace: monitoring
-            type: platform
-            owner: platform-team
-            syncwave: "1"          
-
+          - list:
+              elements:
+                - name: cert-manager
+                  path: platform/cert-manager
+                  namespace: cert-manager
+                  type: platform
+                  owner: platform-team
+                  syncwave: "0"
+                - name: opentelemetry-operator
+                  path: platform/opentelemetry-operator
+                  namespace: monitoring
+                  type: platform
+                  owner: platform-team
+                  syncwave: "0"
+                - name: collector
+                  path: platform/collector
+                  namespace: monitoring
+                  type: platform
+                  owner: platform-team
+                  syncwave: "1"
   template:
     metadata:
       name: "{{.env}}-{{.name}}"
