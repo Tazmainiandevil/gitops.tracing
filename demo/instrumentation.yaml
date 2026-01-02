@@ -6,3 +6,6 @@ metadata:
 spec:
   dotnet:
     image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:latest
+
+  exporter:
+    endpoint: http://jaeger-inmemory-instance-collector.monitoring.svc.cluster.local:4318
