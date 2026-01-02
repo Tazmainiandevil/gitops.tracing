@@ -14,6 +14,8 @@ spec:
               elements:
                 - env: dev
                   cluster: in-cluster
+                - env: test
+                  cluster: in-cluster
           - list:
               elements:
                 - name: demo-dotnet
@@ -41,7 +43,7 @@ spec:
         path: "{{.path}}"
         targetRevision: main
       destination:
-        namespace: "{{.namespace}}"
+        namespace: "{{.env}}-{{.namespace}}"
         name: "{{.cluster}}"
       syncPolicy:
         automated:
