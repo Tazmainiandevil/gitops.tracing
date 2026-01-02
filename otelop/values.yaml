@@ -2,12 +2,3 @@ opentelemetry-operator:
   # Basic operator configuration
   replicaCount: 1
   
-  # Manager configuration
-  manager:
-    autoInstrumentationImage:
-      dotnet:
-        repository: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet
-        tag: latest
-    autoInstrumentation:
-      dotnet:
-        enabled: true
