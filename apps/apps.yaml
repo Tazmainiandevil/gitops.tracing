@@ -12,7 +12,7 @@ spec:
           - cluster: in-cluster
             name: opentelemetry-operator
             path: otelop
-            namespace: otel
+            namespace: monitoring
           - cluster: in-cluster
             name: cert-manager
             path: cert-manager
