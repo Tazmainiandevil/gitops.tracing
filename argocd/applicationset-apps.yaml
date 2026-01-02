@@ -43,7 +43,7 @@ spec:
         path: "{{.path}}"
         targetRevision: main
       destination:
-        namespace: "{{.env}}-{{.namespace}}"
+        namespace: "{{.namespace}}"
         name: "{{.cluster}}"
       syncPolicy:
         automated:
